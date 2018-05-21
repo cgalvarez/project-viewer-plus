@@ -1,24 +1,18 @@
 'use strict';
 
+const proxyquire = require('proxyquire');
 const { testquire } = require('atom-coverage');
 const path = require('path');
 const sinon = require('sinon');
 
-const Package = testquire('package');
-const Database = testquire('services/database');
+const Package = proxyquire(testquire('package', false), {
+  './services/database': {}
+});
 const { PLUGIN_NAME } = testquire('constants/base');
 
 describe('package', async function () {
   beforeEach(async function () {
     this.sandbox = sinon.createSandbox();
-
-    this.sandbox.stub(Database.prototype, 'initialize').callsFake();
-  //   this.database.onDidError.callsFake(() => {});
-  //   this.database.onDidChange.callsFake(() => {});
-  //   this.database.destroy.callsFake(() => {});
-  //   this.database.serialize.callsFake(() => {});
-  //   this.database.setInitialSelectedProject.callsFake(() => {});
-  //   this.database.openFile.callsFake(() => {});
   });
 
   beforeEach(async function () {
